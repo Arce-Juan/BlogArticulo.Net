@@ -1,0 +1,166 @@
+﻿@using Presentacion.Web.Models
+@model VerArticuloViewModels
+@{
+    ViewBag.Title = "Ver Articulo";
+    Layout = "~/Views/Shared/_PrincipalSitie.cshtml";
+}
+
+
+<style type="text/css">
+    .img-center {
+        display: flex;
+        margin: 0 auto;
+    }
+</style>
+
+@if (Model.Articulo == null)
+{
+    <div class="row">
+        <div class="col-12 bg-primary text-white">
+            <h3>@Model.ErrorVerArticulo</h3>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row bg-primary text-white">
+        <div class="col-12">
+            <h1>@Model.Articulo.Titulo.ToUpper()</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2><b>@Model.Articulo.Cabecera</b></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="badges">
+                <h5>Categoria <span class="badge badge-warning">@Model.Articulo.TipoArticulo.Nombre</span></h5>
+                <h5>Escrito por <span class="badge badge-info">@Model.Articulo.Usuario.NickName</span></h5>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            Publicado: <b>@Model.Articulo.FechaPublicacion.ToString("dd-MM-yyyy HH:mm")</b>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12 justify-content-center img-center">
+            <img src="~/Resource/imagenes/Articulos/@Model.Articulo.Imagen" alt="@Model.Articulo.Titulo" class="img-fluid">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            @Model.Articulo.Cuerpo
+        </div>
+    </div>
+
+    <hr style="color: #0056b2;">
+
+    <div class="row bg-primary text-white">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <h5>Comentarios</h5>
+        </div>
+    </div>
+
+    using (Html.BeginForm("GuardarComentario", "Articulo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-3 text-center">
+                    <br>
+                    <img class="rounded-circle img-fluid" src="~/Resource/imagenes/Usuarios/@Model.Usuario.Imagen" alt="...">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <div class="row">
+                            <h5 class="card-title">@Model.Usuario.NickName</h5>
+                        </div>
+                        @if (Model.Usuario.Perfil.Nombre != "Invitado")
+                        {
+                            <div class="row mb-1">
+                                <textarea name="comentario" id="comentario" rows="2" style="min-width: 100%" placeholder="Escribe un comentario .."></textarea>
+                                <input type="hidden" name="nArticuloComentado" id="nArticuloComentado" value="@Model.Articulo.Id">
+                            </div>
+                            <div class="row d-flex flex-row-reverse bd-highlight">
+                                <button type="submit" class="btn btn-info">Comentar</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row mb-1">
+                                <textarea rows="2" style="min-width: 100%" placeholder="Escribe un comentario .." disabled readonly></textarea>
+                            </div>
+                            <div class="row">
+                                <p>Para poder comentar debes <a href="/Home/Login">Ingresar / Registrarte</a></p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <hr style="color: #0056b2;">
+
+    foreach (var item in Model.Articulo.Comentarios)
+    {
+        <div class="card mb-3 text-black-50 bg-light" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-xs-3 text-center">
+                    <br>
+                    <img class="rounded-circle" src="~/Resource/imagenes/Usuarios/@item.Usuario.Imagen" class="img-fluid" alt="...">
+                </div>
+                <div class="col-xs-9">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>@item.Usuario.NickName</b></h5>
+                        <p class="card-text">@item.Detalle</p>
+                        <p class="card-text"><small class="text-muted">@item.FechaHora.ToString("dd-MM-yyyy HH:mm")</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!-- Modal Mensaje -->
+    <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog" aria-labelledby="ModalLabelVer" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabelVer"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="ModalLabelVer_Body" class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var mensaje = "@Model.ErrorVerArticulo";
+            if (mensaje != "") {
+                $("#ModalLabelVer").html("Error!");
+                $("#ModalLabelVer_Body").html(mensaje);
+                $('#ModalMensaje').modal('show');
+            }
+        });
+
+    </script>
+
+    <hr style="color: #0056b2;">
+
+}

@@ -1,0 +1,107 @@
+﻿@using Presentacion.Web.Models
+@using Presentacion.Web.Extenciones
+@model GestionarArticuloViewModels
+@{
+    ViewBag.Title = "Gestion Articulo";
+    Layout = "~/Views/Shared/_PrincipalSitie.cshtml";
+}
+
+<style media="screen">
+    #uploadForm,
+    #imagePreview {
+        width: 720px;
+        margin: 0 auto;
+    }
+
+    img {
+        max-width: 250px;
+        height: auto;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+        @{var txtAccion = Model.TipoGestion == TipoDeGestion.ALTA ? "Nuevo Articulo" : "Modificar Articulo";}
+        <h3>@txtAccion</h3>
+
+        @using (Html.BeginForm("GestionarArticulo", "Articulo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.TxtTitulo, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.TxtTitulo, new { @class = "form-control", @placeholder = "Titulo validate..." })
+                @Html.ValidationMessageFor(m => m.TxtTitulo, "", new { @class = "text-danger"})
+            </div>
+            
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.TxtCabecera, new { @class = "col-md-2 control-label" })
+                @Html.TextAreaFor(m => m.TxtCabecera, new { rows = "3", @class = "form-control", @placeholder = "Cabecera validator..." })
+                @Html.ValidationMessageFor(m => m.TxtCabecera, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.TxtCuerpo, new { @class = "col-md-2 control-label" })
+                @Html.TextAreaFor(m => m.TxtCuerpo, new { rows = "4", @class = "form-control", @placeholder = "Cuerpo validator..." })
+                @Html.ValidationMessageFor(m => m.TxtCuerpo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label for="imagen">Imagen</label>
+                <input type="file" name="nImagen" id="miImagen" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <div id="imagePreview">
+                    @if (!string.IsNullOrEmpty(Model.Articulo.Imagen))
+                    {
+                        <img src="~/Resource/imagenes/Articulos/@Model.Articulo.Imagen">
+                    }
+                    else
+                    {
+                        <img src="~/Resource/imagenes/Articulos/none.jpg">
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="idTipoArticulo"></label>
+                <select name="nTipoArticulo" id="idTipoArticulo" class="form-control">
+                    @foreach (var item in Model.TiposDeArticulo)
+                    {
+                        var txtSelected = item.Id == Model.Articulo.TipoArticulo_Id ? "selected" : "";
+                        <option value="@item.Id" @txtSelected>@item.Nombre</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="nHiddenTipoGestion" value="@Model.TipoGestion.ToString()" />
+                <input type="hidden" name="nHiddenIdArticulo" value="@Model.Articulo.Id" />
+                <input type="hidden" name="nHiddenImagen" value="@Model.Articulo.Imagen" />
+                <button class="btn btn-primary" type="submit">@txtAccion</button>
+                <button class="btn btn-secondary" type="reset">Cancelar</button>
+            </div>
+
+            <script type="text/javascript">
+                (function () {
+                    function filePreview(input) {
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $('#imagePreview').html("<img src='" + e.target.result + "' />");
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                    $('#miImagen').change(function () {
+                        filePreview(this);
+                    });
+                })();
+            </script>
+        }
+    </div>
+</div>

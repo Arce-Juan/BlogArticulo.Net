@@ -1,0 +1,138 @@
+﻿@using Presentacion.Web.Models
+@model ListaUsuariosViewModels
+@{
+    ViewBag.Title = "Lista de Usuarios";
+    Layout = "~/Views/Shared/_PrincipalSitie.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+        <h3>Gestion de Usuarios </h3>
+    </div>
+</div>
+
+@using (Html.BeginForm("BuscarUsuariosPorFiltro", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="searchText" placeholder="Buscar..." value="">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                <th scope="col">#</th>
+                <th scope="col">Nick Name</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Activo</th>
+                <th scope="col">Apellido nombre</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Accciones</th>
+                </thead>
+
+                @foreach (var item in Model.Usuarios)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.NickName</td>
+                        <td>
+                            <img src="~/Resource/imagenes/Usuarios/@item.Imagen" alt="" height="100px" width="100px" class="img-thumbnail">
+                        </td>
+                        <td>
+                            @{var estado = item.Activo == 1 ? "SI" : "NO";}
+                            @estado
+                        </td>
+                        @{var nombreCompleto = item.Apellido + ", " + item.Nombre;}
+                        <td>@nombreCompleto</td>
+                        <td>@item.Mail</td>
+                        <td>@item.Perfil.Nombre</td>
+                        <td style="width: 110px;">
+                            <a class="btn btn-info" href="" title="Modificar" onclick="return LanzarModalModificar(@item.Id, @item.Activo, @item.Perfil_Id, '@item.NickName', '@item.Apellido', '@item.Nombre')">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div id="divMisModales">
+
+    <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-modificar">
+        @using (Html.BeginForm("ModificarActivoYTipoPefil", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h4 class="modal-title">Editar Usuario: 
+                            <b id="idBNombreUsuario"></b>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Activo</label>
+                            <div class="col-sm-3">
+                                <select name="nSelectActivo" id="idSelectActivo" class="custom-select">
+                                    <option value="1" selected>SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Perfil</label>
+                            <div class="col-sm-5">
+                                <select name="nSelectPerfil" id="idSelectPerfil" class="custom-select">
+                                    @foreach (var item in Model.Perfiles)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="nHiddenIdUsuario" id="idHiddenIdUsuario" value="" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-secondary">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    var LanzarModalModificar = function (id, activo, idPerfil, nickName, apellido, nombre) {
+        $("#idHiddenIdUsuario").val(id);
+        $("#idSelectActivo").val(activo);
+        $("#idSelectPerfil").val(idPerfil);
+        $("#idBNombreUsuario").html(nickName + " - " + apellido + ", " + nombre);
+        $("#modal-modificar").modal("show");
+        return false;
+    };
+
+    $(document).ready(function () {
+        //$("#divMisModales").load('Articulo/Modal_ABM.html');
+    });
+</script>
+

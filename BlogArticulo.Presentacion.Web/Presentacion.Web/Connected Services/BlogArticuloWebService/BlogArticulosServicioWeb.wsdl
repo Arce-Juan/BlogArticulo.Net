@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ObtenerArticulosActivos">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerArticulosActivosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArticulosActivosResult" type="tns:ArrayOfArticulo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfArticulo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Articulo" nillable="true" type="tns:Articulo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Articulo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Titulo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cabecera" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cuerpo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Imagen" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Activo" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FechaPublicacion" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TipoArticulo_Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Usuario_Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoArticulo" type="tns:TipoArticulo" />
+          <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="tns:Usuario" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comentarios" type="tns:ArrayOfComentario" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TipoArticulo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Usuario">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="NickName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contrasena" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Imagen" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Activo" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Apellido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Perfil_Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Perfil" type="tns:Perfil" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Perfil">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ListaPermisos" type="tns:ArrayOfPermiso" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPermiso">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Permiso" nillable="true" type="tns:Permiso" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Permiso">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfComentario">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Comentario" nillable="true" type="tns:Comentario" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Comentario">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Detalle" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FechaHora" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Usuario_Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="tns:Usuario" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerArticuloPorId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idArticulo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticuloPorIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArticuloPorIdResult" type="tns:Articulo" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticuloPorTipo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idTipo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticuloPorTipoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArticuloPorTipoResult" type="tns:ArrayOfArticulo" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticulosParaAdmin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filtro" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticulosParaAdminResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArticulosParaAdminResult" type="tns:ArrayOfArticulo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticulosPorIdUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idUsuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="filtro" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArticulosPorIdUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArticulosPorIdUsuarioResult" type="tns:ArrayOfArticulo" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GestionArticulo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tipoGestion" type="tns:TipoGestionWS" />
+            <s:element minOccurs="0" maxOccurs="1" name="articulo" type="tns:Articulo" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="TipoGestionWS">
+        <s:restriction base="s:string">
+          <s:enumeration value="ALTA" />
+          <s:enumeration value="BAJA" />
+          <s:enumeration value="MODIFICACION" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GestionArticuloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiarEstadoArticulo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idArticulo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idEstado" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiarEstadoArticuloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerUsuarios">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filtro" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerUsuariosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerUsuariosResult" type="tns:ArrayOfUsuario" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUsuario">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Usuario" nillable="true" type="tns:Usuario" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerUsuarioPorId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idUsuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerUsuarioPorIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerUsuarioPorIdResult" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerUsuarioPorNickYPass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nick" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contrasena" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerUsuarioPorNickYPassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerUsuarioPorNickYPassResult" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GestionUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tipoGestion" type="tns:TipoGestionWS" />
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GestionUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditarPerfil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditarPerfilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificarActivoYTipoPefil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificarActivoYTipoPefilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerTiposArticulos">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerTiposArticulosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerTiposArticulosResult" type="tns:ArrayOfTipoArticulo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTipoArticulo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TipoArticulo" nillable="true" type="tns:TipoArticulo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerTipoArticuloPorId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idTipoArticulo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerTipoArticuloPorIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerTipoArticuloPorIdResult" type="tns:TipoArticulo" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarComentario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idArticulo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="comentario" type="tns:Comentario" />
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarComentarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mensajeError" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerPerfiles">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerPerfilesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerPerfilesResult" type="tns:ArrayOfPerfil" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPerfil">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Perfil" nillable="true" type="tns:Perfil" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ObtenerArticulosActivosSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosActivos" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticulosActivosSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosActivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticuloPorIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloPorId" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticuloPorIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticuloPorTipoSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloPorTipo" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticuloPorTipoSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloPorTipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticulosParaAdminSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosParaAdmin" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticulosParaAdminSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosParaAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticulosPorIdUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosPorIdUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArticulosPorIdUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArticulosPorIdUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="GestionArticuloSoapIn">
+    <wsdl:part name="parameters" element="tns:GestionArticulo" />
+  </wsdl:message>
+  <wsdl:message name="GestionArticuloSoapOut">
+    <wsdl:part name="parameters" element="tns:GestionArticuloResponse" />
+  </wsdl:message>
+  <wsdl:message name="CambiarEstadoArticuloSoapIn">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoArticulo" />
+  </wsdl:message>
+  <wsdl:message name="CambiarEstadoArticuloSoapOut">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoArticuloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuariosSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarios" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuariosSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuariosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuarioPorIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarioPorId" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuarioPorIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarioPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuarioPorNickYPassSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarioPorNickYPass" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerUsuarioPorNickYPassSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarioPorNickYPassResponse" />
+  </wsdl:message>
+  <wsdl:message name="GestionUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:GestionUsuario" />
+  </wsdl:message>
+  <wsdl:message name="GestionUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:GestionUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="EditarPerfilSoapIn">
+    <wsdl:part name="parameters" element="tns:EditarPerfil" />
+  </wsdl:message>
+  <wsdl:message name="EditarPerfilSoapOut">
+    <wsdl:part name="parameters" element="tns:EditarPerfilResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModificarActivoYTipoPefilSoapIn">
+    <wsdl:part name="parameters" element="tns:ModificarActivoYTipoPefil" />
+  </wsdl:message>
+  <wsdl:message name="ModificarActivoYTipoPefilSoapOut">
+    <wsdl:part name="parameters" element="tns:ModificarActivoYTipoPefilResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTiposArticulosSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerTiposArticulos" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTiposArticulosSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerTiposArticulosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTipoArticuloPorIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoArticuloPorId" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTipoArticuloPorIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoArticuloPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GuardarComentarioSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarComentario" />
+  </wsdl:message>
+  <wsdl:message name="GuardarComentarioSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarComentarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerPerfilesSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerPerfiles" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerPerfilesSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerPerfilesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BlogArticulosServicioWebSoap">
+    <wsdl:operation name="ObtenerArticulosActivos">
+      <wsdl:input message="tns:ObtenerArticulosActivosSoapIn" />
+      <wsdl:output message="tns:ObtenerArticulosActivosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorId">
+      <wsdl:input message="tns:ObtenerArticuloPorIdSoapIn" />
+      <wsdl:output message="tns:ObtenerArticuloPorIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorTipo">
+      <wsdl:input message="tns:ObtenerArticuloPorTipoSoapIn" />
+      <wsdl:output message="tns:ObtenerArticuloPorTipoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosParaAdmin">
+      <wsdl:input message="tns:ObtenerArticulosParaAdminSoapIn" />
+      <wsdl:output message="tns:ObtenerArticulosParaAdminSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosPorIdUsuario">
+      <wsdl:input message="tns:ObtenerArticulosPorIdUsuarioSoapIn" />
+      <wsdl:output message="tns:ObtenerArticulosPorIdUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GestionArticulo">
+      <wsdl:input message="tns:GestionArticuloSoapIn" />
+      <wsdl:output message="tns:GestionArticuloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoArticulo">
+      <wsdl:input message="tns:CambiarEstadoArticuloSoapIn" />
+      <wsdl:output message="tns:CambiarEstadoArticuloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarios">
+      <wsdl:input message="tns:ObtenerUsuariosSoapIn" />
+      <wsdl:output message="tns:ObtenerUsuariosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorId">
+      <wsdl:input message="tns:ObtenerUsuarioPorIdSoapIn" />
+      <wsdl:output message="tns:ObtenerUsuarioPorIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorNickYPass">
+      <wsdl:input message="tns:ObtenerUsuarioPorNickYPassSoapIn" />
+      <wsdl:output message="tns:ObtenerUsuarioPorNickYPassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GestionUsuario">
+      <wsdl:input message="tns:GestionUsuarioSoapIn" />
+      <wsdl:output message="tns:GestionUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EditarPerfil">
+      <wsdl:input message="tns:EditarPerfilSoapIn" />
+      <wsdl:output message="tns:EditarPerfilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificarActivoYTipoPefil">
+      <wsdl:input message="tns:ModificarActivoYTipoPefilSoapIn" />
+      <wsdl:output message="tns:ModificarActivoYTipoPefilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTiposArticulos">
+      <wsdl:input message="tns:ObtenerTiposArticulosSoapIn" />
+      <wsdl:output message="tns:ObtenerTiposArticulosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoArticuloPorId">
+      <wsdl:input message="tns:ObtenerTipoArticuloPorIdSoapIn" />
+      <wsdl:output message="tns:ObtenerTipoArticuloPorIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarComentario">
+      <wsdl:input message="tns:GuardarComentarioSoapIn" />
+      <wsdl:output message="tns:GuardarComentarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPerfiles">
+      <wsdl:input message="tns:ObtenerPerfilesSoapIn" />
+      <wsdl:output message="tns:ObtenerPerfilesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BlogArticulosServicioWebSoap" type="tns:BlogArticulosServicioWebSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerArticulosActivos">
+      <soap:operation soapAction="http://tempuri.org/ObtenerArticulosActivos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorId">
+      <soap:operation soapAction="http://tempuri.org/ObtenerArticuloPorId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorTipo">
+      <soap:operation soapAction="http://tempuri.org/ObtenerArticuloPorTipo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosParaAdmin">
+      <soap:operation soapAction="http://tempuri.org/ObtenerArticulosParaAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosPorIdUsuario">
+      <soap:operation soapAction="http://tempuri.org/ObtenerArticulosPorIdUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GestionArticulo">
+      <soap:operation soapAction="http://tempuri.org/GestionArticulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoArticulo">
+      <soap:operation soapAction="http://tempuri.org/CambiarEstadoArticulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarios">
+      <soap:operation soapAction="http://tempuri.org/ObtenerUsuarios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorId">
+      <soap:operation soapAction="http://tempuri.org/ObtenerUsuarioPorId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorNickYPass">
+      <soap:operation soapAction="http://tempuri.org/ObtenerUsuarioPorNickYPass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GestionUsuario">
+      <soap:operation soapAction="http://tempuri.org/GestionUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditarPerfil">
+      <soap:operation soapAction="http://tempuri.org/EditarPerfil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificarActivoYTipoPefil">
+      <soap:operation soapAction="http://tempuri.org/ModificarActivoYTipoPefil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTiposArticulos">
+      <soap:operation soapAction="http://tempuri.org/ObtenerTiposArticulos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoArticuloPorId">
+      <soap:operation soapAction="http://tempuri.org/ObtenerTipoArticuloPorId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarComentario">
+      <soap:operation soapAction="http://tempuri.org/GuardarComentario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPerfiles">
+      <soap:operation soapAction="http://tempuri.org/ObtenerPerfiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BlogArticulosServicioWebSoap12" type="tns:BlogArticulosServicioWebSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerArticulosActivos">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerArticulosActivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorId">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerArticuloPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloPorTipo">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerArticuloPorTipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosParaAdmin">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerArticulosParaAdmin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticulosPorIdUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerArticulosPorIdUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GestionArticulo">
+      <soap12:operation soapAction="http://tempuri.org/GestionArticulo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoArticulo">
+      <soap12:operation soapAction="http://tempuri.org/CambiarEstadoArticulo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarios">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerUsuarios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorId">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerUsuarioPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuarioPorNickYPass">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerUsuarioPorNickYPass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GestionUsuario">
+      <soap12:operation soapAction="http://tempuri.org/GestionUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditarPerfil">
+      <soap12:operation soapAction="http://tempuri.org/EditarPerfil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificarActivoYTipoPefil">
+      <soap12:operation soapAction="http://tempuri.org/ModificarActivoYTipoPefil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTiposArticulos">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerTiposArticulos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoArticuloPorId">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerTipoArticuloPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarComentario">
+      <soap12:operation soapAction="http://tempuri.org/GuardarComentario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPerfiles">
+      <soap12:operation soapAction="http://tempuri.org/ObtenerPerfiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BlogArticulosServicioWeb">
+    <wsdl:port name="BlogArticulosServicioWebSoap" binding="tns:BlogArticulosServicioWebSoap">
+      <soap:address location="http://localhost:50333/ServiciosWeb/BlogArticulosServicioWeb.asmx" />
+    </wsdl:port>
+    <wsdl:port name="BlogArticulosServicioWebSoap12" binding="tns:BlogArticulosServicioWebSoap12">
+      <soap12:address location="http://localhost:50333/ServiciosWeb/BlogArticulosServicioWeb.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

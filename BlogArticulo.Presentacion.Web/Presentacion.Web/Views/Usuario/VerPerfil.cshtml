@@ -1,0 +1,148 @@
+﻿@using Presentacion.Web.Models
+@model VerPerfilViewModels
+@{
+    ViewBag.Title = "Ver Perfil";
+    Layout = "~/Views/Shared/_PrincipalSitie.cshtml";
+}
+
+<style media="screen">
+    #uploadForm,
+    #imagePreview {
+        margin: 0 auto;
+    }
+
+    img {
+        max-width: 250px;
+        height: auto;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="panel-body">
+            @using (Html.BeginForm("VerPerfil", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="name">Usuario</label>
+                            <input type="text" class="form-control" value="@Model.Usuario.NickName" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="nombre">Perfil</label>
+                            <input type="text" class="form-control" value="@Model.Usuario.Perfil.Nombre" disabled readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="name">Apellidos</label>
+                            <input type="text" class="form-control" value="@Model.Usuario.Apellido" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="nombre">Nombres</label>
+                            <input type="text" class="form-control" value="@Model.Usuario.Nombre" disabled readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TxtMail, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.TxtMail, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.TxtMail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TxtContrasena, new { @class = "control-label" })
+                            @Html.PasswordFor(m => m.TxtContrasena, new { @class = "form-control", @value = Model.TxtContrasena })
+                            @Html.ValidationMessageFor(m => m.TxtContrasena, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TxtConfirmaContrasena, new { @class = "control-label" })
+                            @Html.PasswordFor(m => m.TxtConfirmaContrasena, new { @class = "form-control", @value = Model.TxtConfirmaContrasena })
+                            @Html.ValidationMessageFor(m => m.TxtConfirmaContrasena, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="imagen">Imagen</label>
+                            <input type="file" name="nImagen" id="miImagen" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="imagen">Imagen Actual</label>
+                            <div id="imagePreview">
+                                @if (!string.IsNullOrEmpty(Model.Usuario.Imagen))
+                                {
+                                    <img src="~/Resource/imagenes/Usuarios/@Model.Usuario.Imagen">
+                                }
+                                else
+                                {
+                                    <img src="~/Resource/imagenes/Usuarios/default.png">
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col d-flex justify-content-center">
+                        <input type="hidden" name="nIdHiddenIdUsuario" value="@Model.Usuario.Id" />
+                        <input type="hidden" name="nHiddenImagen" value="@Model.Usuario.Imagen" />
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-user"></i>  Actualizar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    (function () {
+        function filePreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').html("<img src='" + e.target.result + "' />");
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $('#miImagen').change(function () {
+            filePreview(this);
+        });
+    })();
+
+    var validarPassword = function () {
+        $('#idDivAlertasDarger').html("");
+        if ($('#password').val() != $('#password-confirm').val()) {
+            $('#idDivAlertasDarger').html("<div class='alert alert-danger'><ul><li>Las contraseña no es igual a la de confirmación</li></ul></div>");
+            return false;
+        }
+    };
+</script>
+
